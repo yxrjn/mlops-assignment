@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Centralized Model Prediction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Multi-Model Prediction System</h2>
+      
+      <form action="/predict" method="post">
+        <div class="form-group">
+          <label for="model">Select Model</label>
+          <select class="form-control" name="model" id="model" onchange="updateFields()">
+            <option value="predict_xr">Wheat Seeds Model</option>
+            <option value="predict_jet">Used Car Price Model</option>
+            <option value="predict_dk">Melbourne House Price Model</option>
+          </select>
+        </div>
+
+        <div id="inputFields"></div>
+
+        <button type="submit" class="btn btn-primary">Predict</button>
+      </form>
+
+      {% if prediction_text %}
+      <div class="mt-4">
+        <h4>{{ prediction_text }}</h4>
+      </div>
+      {% endif %}
+    </div>
+
+    <script>
+      function updateFields() {
+        const model = document.getElementById("model").value;
+        const inputFields = document.getElementById("inputFields");
+
+        // Feature sets based on model selection
+        const features = {
+          "predict_xr": ["Area", "Perimeter", "Compactness", "Length", "Width", "AsymmetryCoeff", "Groove"],
+          "predict_jet": [""] #Fill in this,
+          "predict_dk": [""] #Fill in this
+        };
+
+        inputFields.innerHTML = "";
+        features[model].forEach(feature => {
+          inputFields.innerHTML += `
+            <div class="form-group">
+              <label for="${feature}">${feature}</label>
+              <input type="text" class="form-control" name="${feature}" placeholder="Enter ${feature}" required>
+            </div>`;
+        });
+      }
+
+      // Initialize fields on page load
+      window.onload = updateFields;
+    </script>
+  </body>
+</html>
