@@ -5,16 +5,25 @@ from omegaconf import DictConfig
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-@hydra.main(config_path=".", config_name="config")
+# Fix Hydra changing the working directory
+@hydra.main(config_path=".", config_name="config", version_base=None)
 def preprocess_data(cfg: DictConfig):
+    # Manually set the working directory to the project root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+    os.chdir(project_root)
+
     dataset_path = cfg.dataset.raw_path
-    if not os.path.exists(dataset_path):
-        raise FileNotFoundError(f"Dataset file '{dataset_path}' not found.")
+    abs_path = os.path.abspath(dataset_path)  # Convert relative path to absolute path
+    
+    print(f"Checking dataset path: {abs_path}")  # Debugging output
+    
+    if not os.path.exists(abs_path):
+        raise FileNotFoundError(f"Dataset file '{abs_path}' not found.")
 
     # Load dataset
-    df = pd.read_csv(dataset_path)
+    df = pd.read_csv(abs_path)
 
-    #features and target variable
+    # Features and target variable
     features = ["Area", "Perimeter", "Compactness", "Length", "Width", "AsymmetryCoeff", "Groove"]
     target = "Type"
 
