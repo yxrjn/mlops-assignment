@@ -1,7 +1,7 @@
 dataset:
   raw_path: "xinrui/data/raw/03_Wheat_Seeds.csv"
-  processed_train_path: "xinrui/data/processed/train.csv"
-  processed_test_path: "xinrui/data/processed/test.csv"
+  processed_train_path: "xinrui/processed/train.csv"
+  processed_test_path: "xinrui/processed/test.csv"
   numeric_features: ["Area", "Perimeter", "Compactness", "Length", "Width", "AsymmetryCoeff", "Groove"]
   test_size: 0.2
 
