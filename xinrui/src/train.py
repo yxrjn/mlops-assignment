@@ -26,11 +26,11 @@ logging.basicConfig(
 
 @hydra.main(config_path=".", config_name="config", version_base=None)
 def train_model(cfg: DictConfig):
-    # Ensure working directory is set to where train.py is located
+    # Ensure working directory is set to the project root
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
     os.chdir(project_root)
     
-    dataset_path = os.path.join(project_root, cfg.dataset.processed_train_path)  # FIXED PATH
+    dataset_path = os.path.join(project_root, cfg.dataset.processed_train_path)
     logging.info(f"Checking dataset path: {dataset_path}")
     print(f"Checking dataset path: {dataset_path}")  # Print for terminal view
 
@@ -68,18 +68,21 @@ def train_model(cfg: DictConfig):
     logging.info("Evaluating model performance...")
     evaluate_model(best_model)
     
-    save_dir = os.path.join(log_dir, "plots")  # Save plots in train.py directory
+    save_dir = os.path.join(project_root, "xinrui/plot")  # Save in xinrui folder
     os.makedirs(save_dir, exist_ok=True)
+
+    conf_matrix_path = os.path.join(save_dir, "confusion_matrix.png")
+    auc_path = os.path.join(save_dir, "auc.png")
 
     plot_model(best_model, plot="confusion_matrix", save=True)
     plot_model(best_model, plot="auc", save=True)
 
-    # Move plots to designated directory
-    shutil.move("Confusion Matrix.png", f"{save_dir}/confusion_matrix.png")
-    shutil.move("AUC.png", f"{save_dir}/auc.png")
+    # Move plots to correct directory
+    shutil.move("Confusion Matrix.png", conf_matrix_path)
+    shutil.move("AUC.png", auc_path)
 
-    logging.info(f"Confusion Matrix saved to: {save_dir}/confusion_matrix.png")
-    logging.info(f"AUC Curve saved to: {save_dir}/auc.png")
+    logging.info(f"Confusion Matrix saved to: {conf_matrix_path}")
+    logging.info(f"AUC Curve saved to: {auc_path}")
 
     if hasattr(best_model, "coef_") or hasattr(best_model, "feature_importances_"):
         plot_model(best_model, plot="feature")
@@ -90,8 +93,7 @@ def train_model(cfg: DictConfig):
     logging.info("Making predictions on test data...")
     predictions = predict_model(best_model)
 
-    # Save the trained model
-    model_path = os.path.join(log_dir, cfg.model.output_path)  # Save model in train.py directory
+    model_path = os.path.join(project_root, cfg.model.output_path)  # Save in xinrui folder
     os.makedirs(os.path.dirname(model_path), exist_ok=True)  # Ensure directory exists
     save_model(best_model, model_path)
 
