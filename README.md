@@ -46,3 +46,5 @@ processed (The train and test datasets will be developed after running preproces
 notebooks (Previous individual task 1 and task 2 jupyter notebooks. Individual files!)
 data (Inside theres foolder called raw , inside theres individual given csv/excel)
 app (This is individual task 3 folder. Should be able to run with poetry. ) Folders
+
+app folder is a folder for all models integration. Where when you were to run the app.py in app folder in the main directory , you will be able to access all 3 models html and predictions.
