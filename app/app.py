@@ -6,7 +6,7 @@ from pycaret.classification import load_model, predict_model
 
 app = Flask(__name__)
 
-# Get the base directory (one level up from `app`)
+# Get the base directory (one level up from app)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load models with correct paths
@@ -33,30 +33,48 @@ model_html_templates = {
 # Mapping for Wheat Classification
 wheat_mapping = {1: "Kama", 2: "Rosa", 3: "Canadian"}
 
-@app.route("/")
+# Mapping model names to display names for dropdown
+model_mapping = {
+    "predict_xr": "Wheat Seeds Prediction",
+    "predict_jet": "Used Car Price Prediction",
+    "predict_dk": "Melbourne"
+}
+
+@app.route('/')
 def home():
-    return render_template("index.html", models=list(models.keys()))  # Main selection page
+    default_model = "predict_xr"
+    model_display_name = model_mapping.get(default_model, "Unknown Model")
+
+    return render_template('index.html',
+                           model_display_name=model_display_name,
+                           model_mapping=model_mapping,
+                           selected_model=default_model)
 
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
         model_type = request.form.get("model", "predict_xr")  # Default to predict_xr if no model selected
-        if model_type not in models:
-            return render_template("index.html", prediction_text="Error: Invalid model selection", models=list(models.keys()))
 
-        # Extract feature values dynamically
+        if model_type not in models:
+            return render_template("index.html",
+                                   prediction_text="Error: Invalid model selection",
+                                   model_mapping=model_mapping,
+                                   selected_model=model_type)
+
         features = feature_sets[model_type]
         input_values = [request.form.get(feature) for feature in features]
 
-        # Convert inputs to float where applicable
         try:
             input_values = [float(value) for value in input_values]
         except ValueError:
-            return render_template(model_html_templates[model_type], prediction_text="Error: Invalid input format. Ensure all values are numbers.")
+            return render_template(model_html_templates[model_type],
+                                   prediction_text="Error: Invalid input format. Ensure all values are numbers.",
+                                   model_mapping=model_mapping,
+                                   selected_model=model_type)
 
         input_df = pd.DataFrame([input_values], columns=features)
 
-        if model_type == "predict_xr":  # For xinrui's model (Wheat Seeds Classification)
+        if model_type == "predict_xr":  # For Wheat Seeds Classification
             prediction_df = predict_model(models[model_type], data=input_df)
 
             numeric_prediction = prediction_df['prediction_label'].iloc[0] if 'prediction_label' in prediction_df.columns else None
@@ -68,15 +86,23 @@ def predict():
             prediction_table.append({"Parameter": "Predicted Wheat Type", "Value": predicted_type})
             prediction_table.append({"Parameter": "Prediction Score", "Value": prediction_score})
 
-            return render_template("xinrui.html", prediction_table=prediction_table)
+            return render_template("xinrui.html",
+                                   prediction_table=prediction_table,
+                                   model_mapping=model_mapping,
+                                   selected_model=model_type,prediction_text=f"Predicted Wheat Type: {predicted_type}")
 
         else:  # Pickle Models (Used Car / Melbourne Housing)
             prediction = models[model_type].predict(input_df)[0]
-            return render_template(model_html_templates[model_type], prediction_text=f"Predicted Result: {prediction}")
+            return render_template(model_html_templates[model_type],
+                                   prediction_text=f"Predicted Result: {prediction}",
+                                   model_mapping=model_mapping,
+                                   selected_model=model_type)
 
     except Exception as e:
-        return render_template(model_html_templates.get(model_type, "index.html"), prediction_text=f"Error: {str(e)}")
+        return render_template(model_html_templates.get(model_type, "index.html"),
+                               prediction_text=f"Error: {str(e)}",
+                               model_mapping=model_mapping,
+                               selected_model=model_type)
 
 if __name__ == "__main__":
     app.run(debug=True, host="192.168.0.25", port=5000)
-
