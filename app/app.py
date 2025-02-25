@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load models with correct paths
 models = {
-    "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/models/final_wheat_seeds_model")),  # PyCaret Model
+    "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/app/final_wheat_seeds_model")),  # PyCaret Model
     # "predict_jet": pickle.load(open(os.path.join(BASE_DIR, "jet/models/final_used_car_model.pkl"), "rb")),  # Pickle Model
     # "predict_dk": pickle.load(open(os.path.join(BASE_DIR, "dekai/models/final_melbourne_model.pkl"), "rb"))  # Pickle Model
 }
@@ -29,10 +29,6 @@ model_html_templates = {
     # "predict_jet": "jet.html",
     # "predict_dk": "dekai.html"
 }
-
-# Mapping for Wheat Classification
-wheat_mapping = {1: "Kama", 2: "Rosa", 3: "Canadian"}
-
 # Mapping model names to display names for dropdown
 model_mapping = {
     "predict_xr": "Wheat Seeds Prediction",
@@ -80,12 +76,23 @@ def predict():
             numeric_prediction = prediction_df['prediction_label'].iloc[0] if 'prediction_label' in prediction_df.columns else None
             prediction_score = prediction_df['prediction_score'].iloc[0] if 'prediction_score' in prediction_df.columns else "N/A"
 
+            # Map numeric prediction to wheat type
+            wheat_mapping = {1: "Kama", 2: "Rosa", 3: "Canadian"}
+
             predicted_type = wheat_mapping.get(numeric_prediction, "Unknown")
 
-            prediction_table = [{"Parameter": feature, "Value": input_df[feature].iloc[0]} for feature in features]
-            prediction_table.append({"Parameter": "Predicted Wheat Type", "Value": predicted_type})
-            prediction_table.append({"Parameter": "Prediction Score", "Value": prediction_score})
-
+            # Prepare a table (list of dictionaries) to display results
+            prediction_table = [
+                {"Parameter": "Area", "Value": input_df["Area"].iloc[0]},
+                {"Parameter": "Perimeter", "Value": input_df["Perimeter"].iloc[0]},
+                {"Parameter": "Compactness", "Value": input_df["Compactness"].iloc[0]},
+                {"Parameter": "Length", "Value": input_df["Length"].iloc[0]},
+                {"Parameter": "Width", "Value": input_df["Width"].iloc[0]},
+                {"Parameter": "AsymmetryCoeff", "Value": input_df["AsymmetryCoeff"].iloc[0]},
+                {"Parameter": "Groove", "Value": input_df["Groove"].iloc[0]},
+                {"Parameter": "Predicted Wheat Type", "Value": predicted_type},
+                {"Parameter": "Prediction Score", "Value": prediction_score},
+            ]
             return render_template("xinrui.html",
                                    prediction_table=prediction_table,
                                    model_mapping=model_mapping,
