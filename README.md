@@ -48,3 +48,4 @@ data (Inside theres foolder called raw , inside theres individual given csv/exce
 app (This is individual task 3 folder. Should be able to run with poetry. ) Folders
 
 app folder is a folder for all models integration. Where when you were to run the app.py in app folder in the main directory , you will be able to access all 3 models html and predictions.
+Inside the app folder , in the templates folder , there would be 4 different html folders , 1 each for each model prediction webpage and index.html for the 'nav bar' for user to select what models they want to use to predict what they want.
