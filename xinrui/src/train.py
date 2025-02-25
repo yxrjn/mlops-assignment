@@ -47,9 +47,9 @@ def train_model(cfg: DictConfig):
         target="Type",
         normalize=cfg.training.normalize,
         feature_selection=cfg.training.feature_selection,
-        bin_numeric_features=cfg.training.get("bin_features", []),  # Avoid error if missing
+        bin_numeric_features=cfg.training.get("bin_features", ["Area", "Perimeter", "Length", "Width", "Groove"]),
         session_id=cfg.training.session_id,
-        log_experiment=cfg.training.get("log_experiment", False),
+        log_experiment=cfg.training.get("log_experiment", True),
     )
 
     # Automatically select best model or use predefined one

@@ -9,8 +9,8 @@ training:
   normalize: True
   feature_selection: True
   session_id: 42
-  log_experiment: False
-  bin_features: []  
+  log_experiment: True
+  bin_features: ["Area", "Perimeter", "Length", "Width", "Groove"]
 
 model:
   auto_select: True  
