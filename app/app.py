@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load models with correct paths
 models = {
-    "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/app/final_wheat_seeds_model")),  # PyCaret Model
+    "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/models/final_wheat_seeds_model")),  # PyCaret Model
     # "predict_jet": pickle.load(open(os.path.join(BASE_DIR, "jet/models/final_used_car_model.pkl"), "rb")),  # Pickle Model
     # "predict_dk": pickle.load(open(os.path.join(BASE_DIR, "dekai/models/final_melbourne_model.pkl"), "rb"))  # Pickle Model
 }
