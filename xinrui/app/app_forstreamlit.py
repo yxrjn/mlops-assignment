@@ -4,7 +4,6 @@ import streamlit as st
 import urllib.request
 from pycaret.classification import load_model, predict_model
 
-# Model file URL (Replace with your actual GitHub URL)
 MODEL_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/final_wheat_seeds_model.pkl"
 
 # Define model filename
