@@ -1,5 +1,5 @@
 streamlit
-pycaret==3.3.2
+pycaret
 pandas
 scikit-learn
 numpy
