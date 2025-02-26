@@ -1,7 +1,7 @@
+python==3.10
 streamlit
 pycaret==3.3.2
 pandas
 scikit-learn
 numpy
-jinja2
 joblib
