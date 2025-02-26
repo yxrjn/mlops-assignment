@@ -4,7 +4,7 @@ import streamlit as st
 import urllib.request
 from pycaret.classification import load_model, predict_model
 
-MODEL_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/final_wheat_seeds_model.pkl"
+MODEL_URL = "https://github.com/yxrjn/mlops-assignment/blob/main/xinrui/app/final_wheat_seeds_model.pkl"
 
 # Define model filename
 model_path = "final_wheat_seeds_model.pkl"
