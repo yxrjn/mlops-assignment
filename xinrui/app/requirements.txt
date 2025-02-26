@@ -1,4 +1,7 @@
-python==3.10
-pycaret
-pandas
+python==3.10.12
 streamlit
+pycaret==3.3.2
+pandas
+scikit-learn
+numpy
+jinja2
