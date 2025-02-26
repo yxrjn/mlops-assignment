@@ -1,8 +1,11 @@
-from flask import Flask, request, render_template
-import pandas as pd
-from pycaret.classification import load_model, predict_model
 import os
+import pandas as pd
+import streamlit as st
+from flask import Flask, request, render_template
+from pycaret.classification import load_model, predict_model
+import threading
 
+# Flask App Initialization
 app = Flask(__name__)
 
 # Ensure the correct path to the model file
@@ -69,5 +72,50 @@ def predict():
         return render_template('index.html', prediction_text=f'Error: {str(e)}')
 
 
+# 🌟 Streamlit UI for Alternative Access
+def run_streamlit():
+    st.title("🌾 Wheat Seed Classification App")
+    st.markdown("Enter the characteristics of the wheat seed to predict its type.")
+
+    # Define input fields
+    features = ['Area', 'Perimeter', 'Compactness', 'Length', 'Width', 'AsymmetryCoeff', 'Groove']
+    input_values = {}
+
+    # Collect user inputs
+    for feature in features:
+        input_values[feature] = st.number_input(f"{feature}", value=0.0, step=0.1)
+
+    # Predict button
+    if st.button("Predict Wheat Type"):
+        # Create a DataFrame for prediction
+        input_df = pd.DataFrame([input_values])
+
+        # Generate prediction using the loaded model
+        prediction_df = predict_model(model, data=input_df)
+
+        # Extract numeric prediction and score
+        numeric_prediction = prediction_df['prediction_label'].iloc[0] if 'prediction_label' in prediction_df.columns else None
+        prediction_score = prediction_df['prediction_score'].iloc[0] if 'prediction_score' in prediction_df.columns else "N/A"
+
+        # Map numeric prediction to wheat type
+        wheat_mapping = {1: "Kama", 2: "Rosa", 3: "Canadian"}
+        predicted_type = wheat_mapping.get(numeric_prediction, "Unknown")
+
+        # Display prediction results
+        st.success(f"Predicted Wheat Type: **{predicted_type}**")
+        st.write(f"Prediction Score: **{prediction_score}**")
+
+        # Show input values in a table
+        result_df = pd.DataFrame(list(input_values.items()), columns=["Parameter", "Value"])
+        result_df.loc[len(result_df)] = ["Predicted Wheat Type", predicted_type]
+        result_df.loc[len(result_df)] = ["Prediction Score", prediction_score]
+
+        st.table(result_df)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Run Flask and Streamlit in parallel
+    flask_thread = threading.Thread(target=lambda: app.run(debug=True, use_reloader=False))
+    flask_thread.start()
+
+    run_streamlit()
