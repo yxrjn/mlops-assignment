@@ -1,23 +1,27 @@
 import os
 import pandas as pd
 import streamlit as st
+import urllib.request
 from pycaret.classification import load_model, predict_model
 
-# Ensure the correct path to the model file
+# Model file URL (Replace with your actual GitHub URL)
+MODEL_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/final_wheat_seeds_model.pkl"
+
+# Define model filename
 model_path = "final_wheat_seeds_model.pkl"
 
-# Streamlit UI Title
+# Download model if not present
+if not os.path.exists(model_path):
+    st.warning("Downloading model... Please wait.")
+    urllib.request.urlretrieve(MODEL_URL, model_path)
+    st.success("Model downloaded successfully!")
+
+# Load the model
+model = load_model(model_path.replace(".pkl", ""))
+
+# Streamlit UI
 st.title("Wheat Seed Classification App")
 st.markdown("Enter the characteristics of the wheat seed to predict its type.")
-
-# Check if the model file exists before loading
-if not os.path.exists(model_path):
-    st.error(f"Model file not found: {model_path}. Ensure training was successful.")
-    st.stop()
-
-# Load the saved model
-model = load_model(model_path.replace(".pkl", ""))
-st.success("Model loaded successfully!")
 
 # Define input fields
 features = ['Area', 'Perimeter', 'Compactness', 'Length', 'Width', 'AsymmetryCoeff', 'Groove']
