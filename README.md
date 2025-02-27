@@ -19,7 +19,7 @@ common/ - Shared resources, including dvc files, pyproject.toml, and this README
 Each person's folder (xinrui, dekai, jet) contains:<br>
 
 data/ - Raw datasets (data/raw/)<br>
-notebooks/ - Task 1 & 2 Jupyter notebooks<br>
+notebooks/ - Task 1 & 2 Jupyter notebooks and inside would also include those files that is being generated after running task 1 and task 2 files.<br>
 src/ - Includes train.py, preprocess.py, and config.yaml<br>
 models/ - Stores trained model .pkl files<br>
 processed/ - Processed train/test datasets<br>
