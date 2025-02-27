@@ -12,25 +12,31 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Load models
 models = {
     "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/models/final_wheat_seeds_model")),
-    "predict_dk": load_model(os.path.join(BASE_DIR, "dekai/models/final_melbourne_model"))
+    "predict_dk": load_model(os.path.join(BASE_DIR, "dekai/models/final_melbourne_model")),
+    "predict_jet": load_model(os.path.join(BASE_DIR, "jet/models/final_used_car_model"))
+
 }
 
 # Define feature sets for each model
 feature_sets = {
     "predict_xr": ['Area', 'Perimeter', 'Compactness', 'Length', 'Width', 'AsymmetryCoeff', 'Groove'],
-    "predict_dk": ["Rooms", "Type", "Distance", "Bathroom", "Car", "Landsize", "CouncilArea", "Region", "Age"]
+    "predict_dk": ["Rooms", "Type", "Distance", "Bathroom", "Car", "Landsize", "CouncilArea", "Region", "Age"],
+    "predict_jet": ["Brand_Model", "Location", "Year", "Kilometers_Driven", "Fuel_Type", "Transmission",
+                    "Owner_Type", "Mileage", "Engine", "Power", "Seats"]
 }
 
 # HTML template mapping
 model_html_templates = {
     "predict_xr": "xinrui.html",
-    "predict_dk": "dekais_app.html"
+    "predict_dk": "dekais_app.html",
+    "predict_jet": "jet.html"
 }
 
 # Mapping model names to display names
 model_mapping = {
     "predict_xr": "Wheat Seeds Prediction",
-    "predict_dk": "Melbourne House Price Prediction"
+    "predict_dk": "Melbourne House Price Prediction",
+    "predict_jet": "Used Car Price Prediction"
 }
 
 @app.route('/')
@@ -52,6 +58,9 @@ def predict_xr():
 def predict_dk():
     return render_template("dekais_app.html", model_mapping=model_mapping)
 
+@app.route("/predict_jet")
+def predict_jet():
+    return render_template("jet.html", model_mapping=model_mapping)
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -75,10 +84,8 @@ def predict():
             input_df = pd.DataFrame([input_values], columns=features)
             prediction_df = predict_model(models[model_type], data=input_df)
 
-            numeric_prediction = prediction_df['prediction_label'].iloc[
-                0] if 'prediction_label' in prediction_df.columns else None
-            prediction_score = prediction_df['prediction_score'].iloc[
-                0] if 'prediction_score' in prediction_df.columns else "N/A"
+            numeric_prediction = prediction_df['prediction_label'].iloc[0] if 'prediction_label' in prediction_df.columns else None
+            prediction_score = prediction_df['prediction_score'].iloc[0] if 'prediction_score' in prediction_df.columns else "N/A"
 
             wheat_mapping = {1: "Kama", 2: "Rosa", 3: "Canadian"}
             predicted_type = wheat_mapping.get(numeric_prediction, "Unknown")
@@ -113,6 +120,31 @@ def predict():
 
             except Exception as e:
                 return render_template("dekais_app.html", prediction_text=f"Error: {str(e)}",
+                                       model_mapping=model_mapping)
+
+        elif model_type == "predict_jet":  # Used Car Price Prediction
+            try:
+                # Collect form data and convert where needed
+                form_data = {feature: request.form[feature] for feature in features}
+                form_data["Year"] = int(form_data["Year"])
+                form_data["Kilometers_Driven"] = int(form_data["Kilometers_Driven"])
+                form_data["Mileage"] = float(form_data["Mileage"])
+                form_data["Engine"] = int(form_data["Engine"])
+                form_data["Power"] = float(form_data["Power"])
+                form_data["Seats"] = int(form_data["Seats"])
+
+                input_df = pd.DataFrame([form_data])
+
+                # Predict using the car model
+                car_prediction = predict_model(models[model_type], data=input_df)
+
+                # Extract the predicted price
+                predicted_price = round(car_prediction["prediction_label"].iloc[0], 2)
+
+                return render_template("jet.html", predicted_price=predicted_price, model_mapping=model_mapping)
+
+            except Exception as e:
+                return render_template("jet.html", prediction_text=f"Error: {str(e)}",
                                        model_mapping=model_mapping)
 
         return render_template("index.html", prediction_text="Error: Unknown model type", model_mapping=model_mapping)

@@ -61,10 +61,10 @@
 </style>
 
 <div class="form-container"
-   style="{% if predicted_price %} margin-top: 57%; {% else %} margin-top: 57%; {% endif %}">
+   style="{% if predicted_price %} margin-top: 10%; {% else %} margin-top: 10%; {% endif %}">
     <h2>Predict Melbourne House Price</h2>
     <form action="/predict" method="post">
-        <input type="hidden" name="model" value="predict_dk"> <!-- Hidden field to identify model -->
+        <input type="hidden" name="model" value="predict_dk">
 
         <div class="form-group">
             <input type="number" name="Rooms" class="form-control" placeholder="Rooms" required>
