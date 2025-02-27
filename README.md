@@ -15,7 +15,7 @@ The main repository consists of a central mlops-assignment directory with the fo
 xinrui/ - Wheat seeds dataset<br>
 dekai/ - Melbourne residential dataset<br>
 jet/ - Used car prices dataset<br>
-common/ - Shared resources, including dvc files, pyproject.toml, and poetry lock files and as well as necessary generated files by the systems<br>
+common/ - Shared resources, including dvc files, pyproject.toml, and poetry lock file.<br>
 Each person's folder (xinrui, dekai, jet) contains:<br>
 
 data/ - Raw datasets (data/raw/)<br>
