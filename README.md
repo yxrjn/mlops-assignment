@@ -1,51 +1,62 @@
-MLOPS assignment - Development and deployment
+MLOps Assignment - Development & Deployment
+Overview
+--------
+This repository implements an end-to-end MLOps pipeline for training and deploying machine learning models. The project follows best practices in model productization, including:
 
---Overview--
-This repository contains the implementation of an end-to-end MLOps pipeline for training and deploying machine learning models. This assignment will follow the best practices in model productization which includes 
-- Standard ML project folder structure
-- Poetry for dependency management
-- Hydra for configuration management
-- DVC for data version control
-- Collaborative work through GitHub
-- Flask-based web application deployment
+Standard ML project folder structure
+Poetry for dependency management
+Hydra for configuration management
+DVC for data version control
+GitHub for collaboration
+Flask-based web application for model deployment
+Project Structure
+The main repository consists of a central mlops-assignment directory with the following subfolders:
 
---Project structure--
+xinrui/ - Wheat seeds dataset
+dekai/ - Melbourne residential dataset
+jet/ - Used car prices dataset
+common/ - Shared resources, including dvc files, pyproject.toml, and this README.
+Each person's folder (xinrui, dekai, jet) contains:
 
-The main file would be mlops-assignment and there will be 4 folders , xinrui , dekai , jet , common.
-In each of the folder for xinrui , dekai and jet - There will be folders for data folder, notebooks which contains task 1 and task 2 jupyter notebook , src folder as well as app folder for task 3 . In the app folder, there will be app.py , saved ML model pkl file and there would be templates folder for the index.html.
+data/ - Raw datasets (data/raw/)
+notebooks/ - Task 1 & 2 Jupyter notebooks
+src/ - Includes train.py, preprocess.py, and config.yaml
+models/ - Stores trained model .pkl files
+processed/ - Processed train/test datasets
+plot/ (optional) - Visualization outputs
+app/ - Task 3 Flask app (contains app.py, model .pkl files, and templates/ folder for UI)
+Deployment Scripts - Each folder contains Python scripts for individual cloud deployment.
+Development & Deployment Workflow
+Data Preparation & Preprocessing
 
-Dekai will be doing melboune residential dataset , jet will be using used car prices and xinrui will be doing the wheat seeds dataset.
+Raw data stored in data/raw/
+Processed data versioned with DVC
+Model Training & Evaluation
 
-For the common folder , there is dvc file , pyproject.toml and this README.md file.
+Models trained using PyCaret, managed via Hydra
+Hyperparameter tuning for optimal performance
+Model Deployment
 
---Development and deployment workflow--
-1. Data preparation and preprocessing
-- Raw data is stored in data/raw/
-- Processed data versioned using DVC
+Flask-based web app to serve predictions
+Docker containerization for cloud deployment
+Individual model deployment scripts included in xinrui/, dekai/, and jet/ folders
+Version Control & Collaboration
 
-2. Model training and evaluation
-- Models are trained using PyCaret and managed via Hydra configurations
-- Hyperparameter tuning is performed for better accuracy
+Poetry for dependency management
+GitHub for collaboration
+Centralized & Individual Model Deployment
+The app/ folder in the main directory serves all three models in a single deployment:
 
-3. Model Deployment
-- A Flask-based web application is developed to serve predictions
-- Docker containerization for cloud deployment
+Running app.py from the main directory app folder provides a UI for selecting and using different models.
+The templates/ folder contains:
+Three model-specific HTML pages
+index.html with a navigation bar for model selection.
 
-4. Version control and collaboration
-- Dependencies managed using Poetry
-- Code collaboration via GitHub
+Individual Cloud Deployments:
+Each person's folder (xinrui/, dekai/, jet/) contains Python scripts for deploying their model separately to the cloud.
 
-The app folder in the main directory is a centralized app.py to serve all the 3 models in a single deployment.
-
--- Summarized-- Each person's folder has
-
-Src ( Contains train.py , preprocess.py , config.yaml)
-models (This pkl file will be developed after running the train.py)
-plot (Optional)
-processed (The train and test datasets will be developed after running preprocess.py)
-notebooks (Previous individual task 1 and task 2 jupyter notebooks. Individual files!)
-data (Inside theres foolder called raw , inside theres individual given csv/excel)
-app (This is individual task 3 folder. Should be able to run with poetry. ) Folders
-
-app folder is a folder for all models integration. Where when you were to run the app.py in app folder in the main directory , you will be able to access all 3 models html and predictions.
-Inside the app folder , in the templates folder , there would be 4 different html folders , 1 each for each model prediction webpage and index.html for the 'nav bar' for user to select what models they want to use to predict what they want.
+Deployment Links:
+Dekai's App: XXXXXXXXXXXXXXXX
+Jet's App: XXXXXXXXXXXXXXXX
+Xinrui's App (Wheat Seed Classification App - By streamlit): https://mlops-assignment-bjvgx5bo3vmtuggmwxadox.streamlit.app/
+This structure ensures modular development while enabling both unified deployment and individual cloud-hosted models.
