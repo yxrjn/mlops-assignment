@@ -1,4 +1,4 @@
-MLOps Assignment - Development & Deployment
+MLOps Assignment - Development & Deployment<br>
 Overview
 --------
 This repository implements an end-to-end MLOps pipeline for training and deploying machine learning models. The project follows best practices in model productization, including:
