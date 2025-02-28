@@ -13,7 +13,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 models = {
     "predict_xr": load_model(os.path.join(BASE_DIR, "xinrui/models/final_wheat_seeds_model")),
     "predict_dk": load_model(os.path.join(BASE_DIR, "dekai/models/final_melbourne_model")),
-    "predict_jet": load_model(os.path.join(BASE_DIR, "jet/models/final_used_car_model"))
+    "predict_jet": load_model(os.path.join(BASE_DIR, "jet/models/final_used_car_model(nb)"))
 
 }
 
