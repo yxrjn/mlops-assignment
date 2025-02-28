@@ -41,7 +41,14 @@ def train_model(cfg: DictConfig):
         raise FileNotFoundError(f"Dataset '{train_dataset_path}' not found.")
 
     train_data = pd.read_csv(train_dataset_path)
-
+    # pycaret_setup:
+    #   target: "Price"
+    #   session_id: 123
+    #   normalize: True
+    #   transformation: True
+    #   remove_outliers: True
+    #   remove_multicollinearity: True
+    #   multicollinearity_threshold: 0.9
     # Initialize PyCaret setup
     s = setup(data=train_data,
               target=cfg.pycaret_setup.target,
