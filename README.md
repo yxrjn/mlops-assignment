@@ -57,7 +57,7 @@ Each person's folder (xinrui/, dekai/, jet/) contains Python scripts for deployi
 
 Deployment Links:<br>
 Dekai's App (Melbourne Residential Price Prediction): https://bvswfntydhis2dvruncag7.streamlit.app/ <br>
-Jet's App: XXXXXXXXXXXXXXXX<br>
+Jet's App: [XXXXXXXXXXXXXXXX](https://mlops-assignment-jet.streamlit.app)<br>
 Xinrui's App (Wheat Seed Classification App - By streamlit): https://mlops-assignment-bjvgx5bo3vmtuggmwxadox.streamlit.app/<br>
 The group's deloyed model  to the cloud : https://mlops-assignment-exjnfjzf7hzv87awjqoyw9.streamlit.app/<br>
 This structure ensures modular development while enabling both unified deployment and individual cloud-hosted models.<br>
