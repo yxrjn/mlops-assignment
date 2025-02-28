@@ -1,0 +1,12 @@
+streamlit
+pycaret==3.3.2
+pandas==1.5.3
+scikit-learn==1.4.2
+numpy==1.23.5
+joblib==1.2.0
+omegaconf
+catboost==1.2.7
+mlflow==2.1.1
+hydra-core==1.3.2
+lightgbm==4.5.0
+openpyxl==3.1.5
