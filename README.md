@@ -56,7 +56,7 @@ Individual Cloud Deployments:<br>
 Each person's folder (xinrui/, dekai/, jet/) contains Python scripts for deploying their model separately to the cloud.<br>
 
 Deployment Links:<br>
-Dekai's App (Melbourne Residential Price Prediction): https://bvswfntydhis2dvruncag7.streamlit.app/ <br>
+Dekai's App (Melbourne Residential Price Prediction): https://mlops-assignment-3ed4lxwbpn6szrtnattjbe.streamlit.app/ <br>
 Jet's App: (Used Car Price Prediction): https://mlops-assignment-jet.streamlit.app<br>
 Xinrui's App (Wheat Seed Classification App - By streamlit): https://mlops-assignment-bjvgx5bo3vmtuggmwxadox.streamlit.app/<br>
 The group's deloyed model  to the cloud : https://mlops-assignment-exjnfjzf7hzv87awjqoyw9.streamlit.app/<br>
