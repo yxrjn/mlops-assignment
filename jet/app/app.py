@@ -6,7 +6,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Load the trained model
-model = joblib.load("../models/final_used_car_model.pkl")
+model = joblib.load("jet/models/final_used_car_model(nb).pkl")
 
 # Define the home route (renders the HTML form)
 @app.route('/')
