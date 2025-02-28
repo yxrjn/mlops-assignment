@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 # Define paths based on project structure
-model_path = os.path.join("models", "final_used_car_model(nb).pkl")
+model_path = os.path.join("models", "final_used_car_model.pkl")
 
 # Load the trained model
 @st.cache_resource
