@@ -11,7 +11,7 @@ GitHub for collaboration<br>
 Flask-based web application for model deployment<br>
 Project Structure<br>
 The main repository consists of a central mlops-assignment directory with the following subfolders:<br>
-
+app/ - contains our integrated flask for all data models <br>
 xinrui/ - Wheat seeds dataset<br>
 dekai/ - Melbourne residential dataset<br>
 jet/ - Used car prices dataset<br>
