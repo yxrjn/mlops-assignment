@@ -1,4 +1,3 @@
-python==3.11
 streamlit
 pycaret==3.3.2
 pandas
