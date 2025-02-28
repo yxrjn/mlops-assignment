@@ -1,7 +1,0 @@
-[2025-02-28 08:13:07,583][root][INFO] - Checking dataset path: c:\nyp\Sem 6\MLOPS\IT3385_Used_Car\processed\train.csv
-[2025-02-28 08:13:12,345][httpx][INFO] - HTTP Request: GET https://api.gradio.app/gradio-messaging/en "HTTP/1.1 200 OK"
-[2025-02-28 08:13:23,912][root][INFO] - Auto-selecting best model...
-[2025-02-28 08:15:57,444][root][INFO] - Evaluating model performance...
-[2025-02-28 08:16:33,840][root][INFO] - Residual and error plots saved.
-[2025-02-28 08:16:34,271][root][INFO] - Model saved to c:\nyp\Sem 6\MLOPS\IT3385_Used_Car\models\final_used_car_model.pkl
-[2025-02-28 08:16:34,271][root][INFO] - Training completed successfully.
